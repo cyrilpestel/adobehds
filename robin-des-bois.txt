@@ -54,7 +54,7 @@ Robin des bois - Les cinq marionnettes
 Robin des bois - Les quatre brigands
 Robin des bois - Leçons royales
 Robin des bois - Meilleurs ennemis
-Robin des bois - Meli-melo de musique
+Robin des bois - Méli-mélo de musique
 Robin des bois - Pigeon en recommandé
 Robin des bois - Piège au village
 Robin des bois - Pluie de boulets
@@ -73,3 +73,4 @@ Robin des bois - Une fausse accusation
 
 Robin des bois - L'eau du prince
 Robin des bois - L'eau du prince
+Robin des bois - Le marionnettiste

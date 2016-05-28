@@ -64,6 +64,10 @@ if options[:url] != nil
     cmd = "php #{lib}/AdobeHDS.php --delete --manifest \"#{options[:url]}\" --auth \"#{options[:url]}&als=0,3,0,1,0,NaN,0,0,0,41,f,0,1260,f,s,ISBQNEIHITHY,2.11.3,41\" --useragent \"Mozilla/5.0 (X11; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0\""
   elsif tvshowid == "mini-ninjas"
     cmd = "php #{lib}/AdobeHDS.php --delete --manifest \"#{options[:url]}\" --auth \"#{options[:url]}&als=0,2,0,1,0,NaN,0,0,0,125,f,0,629.12,f,s,SMKMAJBWFQEP,2.11.3,125\" --useragent \"Mozilla/5.0 (X11; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0\""
+  elsif tvshowid == "dora-and-friends"
+    cmd = "php #{lib}/AdobeHDS.php --delete --manifest \"#{options[:url]}\" --auth \"#{options[:url]}&als=0,2,0,1,0,NaN,0,0,0,127,f,0,1330.44,f,s,COTYSILRQGDO,2.11.3,127\" --useragent \"Mozilla/5.0 (X11; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0\""
+  elsif tvshowid == "vic-le-viking"
+    cmd = "php #{lib}/AdobeHDS.php --delete --manifest \"#{options[:url]}\" --auth \"#{options[:url]}&als=0,3,0,1,0,NaN,0,0,0,128,f,0,673.56,f,s,RBIQKMGKCAQZ,2.11.3,128\" --useragent \"Mozilla/5.0 (X11; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0\""
   end
 
   # Gets HD
@@ -109,11 +113,11 @@ puts "#{temp_filename}"
 avconv_path = find_executable 'avconv'
 ffmpeg_path = find_executable 'ffmpeg'
 if avconv_path != nil
-  puts "exec : 'avconv -i #{temp_filename} -codec copy \"#{target_dir}/#{title} - S#{options[:season]}E#{options[:episode]}.mp4\"'"
-  system "avconv -i #{temp_filename} -codec copy \"#{target_dir}/#{title} - S#{options[:season]}E#{options[:episode]}.mp4\""
+  puts "exec : 'avconv -i #{temp_filename} -codec copy \"#{title} - S#{options[:season]}E#{options[:episode]}.mp4\"'"
+  system "avconv -i #{temp_filename} -codec copy \"#{title} - S#{options[:season]}E#{options[:episode]}.mp4\""
 elsif ffmpeg_path != nil
-  puts "exec : 'ffmpeg -i #{temp_filename} -c copy -copyts \"#{target_dir}/#{title} - S#{options[:season]}E#{options[:episode]}.mp4\"'"
-  system "ffmpeg -i #{temp_filename} -c copy -copyts \"#{target_dir}/#{title} - S#{options[:season]}E#{options[:episode]}.mp4\""
+  puts "exec : 'ffmpeg -i #{temp_filename} -c copy -copyts \"#{title} - S#{options[:season]}E#{options[:episode]}.mp4\"'"
+  system "ffmpeg -i #{temp_filename} -c copy -copyts \"#{title} - S#{options[:season]}E#{options[:episode]}.mp4\""
 else
     puts "Converter (avconv or ffmpeg) not found"
     exit 1
@@ -125,8 +129,15 @@ files_sorted_by_time = Dir['*'].sort_by{ |f| File.mtime(f) }
 output_filename = files_sorted_by_time.last
 puts "#{output_filename} created"
 
+if target_dir != "."
+  puts "copying \"#{output_filename}\" to \"#{target_dir}\" ..."
+  system "mv \"#{output_filename}\" \"#{target_dir}/#{output_filename}\""
+end
+
+# Cleans
 system "rm -f #{temp_filename}"
 
+# Marks as downloaded
 if options[:tvshow] != nil && options[:tvshowid] != nil
 	File.open("#{options[:tvshowid]}.txt", 'a') { |file| 
 		position = "before"
